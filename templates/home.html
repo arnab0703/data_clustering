@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>API for ML</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="login">
+    <h1>Wine Quality Prediction</h1>
+
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict') }}" method="post">
+      <input type="number" name="alcohol" placeholder="Alcohol" required="required" step="0.1" /><br>
+      <input type="number" name="malic_acid" placeholder="Malic Acid" required="required" step="0.1" /><br>
+      <input type="number" name="ash" placeholder="Ash" required="required" step="0.1" /><br>
+      <input type="number" name="alcalinity_of_ash" placeholder="Alcalinity of Ash" required="required" step="0.1" /><br>
+      <input type="number" name="magnesium" placeholder="Magnesium" required="required" /><br>
+      <input type="number" name="total_phenols" placeholder="Total Phenols" required="required" step="0.1" /><br>
+      <input type="number" name="flavanoids" placeholder="Flavanoids" required="required" step="0.1" /><br>
+      <input type="number" name="nonflavanoid_phenols" placeholder="Nonflavanoid Phenols" required="required" step="0.1" /><br>
+      <input type="number" name="proanthocyanins" placeholder="Proanthocyanins" required="required" step="0.1" /><br>
+      <input type="number" name="color_intensity" placeholder="Color Intensity" required="required" step="0.1" /><br>
+      <input type="number" name="hue" placeholder="Hue" required="required" step="0.1" /><br>
+      <input type="number" name="od280_od315" placeholder="OD280/OD315" required="required" step="0.1" /><br>
+      <input type="number" name="proline" placeholder="Proline" required="required" /><br>
+
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+    <br><br>
+
+    {% if prediction_text %}
+      <h3>{{ prediction_text }}</h3>
+      {% if response_time %}
+        <p>Response Time: {{ response_time }} seconds</p>
+      {% endif %}
+      
+      <h4>Cluster Definition:</h4>
+      <ul>
+        {% if cluster_id == 0 %}
+          <li><strong>This Cluster belongs to: Fruity Wines</strong> - Higher alcohol and flavanoids, moderate malic acid. Best for light dishes.</li>
+        {% elif cluster_id == 1 %}
+          <li><strong>This Cluster belongs to: Tannic Wines</strong> - Higher phenols and color intensity, lower malic acid. Great with red meats.</li>
+        {% elif cluster_id == 2 %}
+          <li><strong>This Cluster belongs to: Balanced Wines</strong> - Well-rounded flavor, suitable for a variety of foods.</li>
+        {% endif %}
+      </ul>
+    {% endif %}
+    
+  </div>
+</body>
+</html>
